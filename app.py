@@ -164,12 +164,9 @@ def form():
             genre = genre.text
             genre = translator.translate(genre, src = "en" ,dest='fa').text
             list_genre.append(genre)
-            genres = True
             break
           else:
-            genres = False
-        if genres == False:
-          list_genre.append("Nothing")
+            list_genre.append("Nothing")
         for url_img in tree.xpath(f'//*[@id="main"]/div/div[3]/div/div[{i}]/div[2]/a/img/@loadlate'):
           def getURL(url):
             resize_factor = 9
