@@ -160,12 +160,16 @@ def form():
           else:
             list_story.append("Nothing")
         for genre in tree.xpath(f"//*[@id='main']/div/div[3]/div/div[{i}]/div[3]/p[1]/span"):
-          if "genre" in genre.classes:
+          check_genre = str(genre.values())
+          if check_genre == "['genre']":
             genre = genre.text
             genre = translator.translate(genre, src = "en" ,dest='fa').text
             list_genre.append(genre)
+            checked_genre = True
             break
           else:
+            checked_genre = False
+          if checked_genre == False:
             list_genre.append("Nothing")
         for url_img in tree.xpath(f'//*[@id="main"]/div/div[3]/div/div[{i}]/div[2]/a/img/@loadlate'):
           def getURL(url):
