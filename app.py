@@ -159,7 +159,7 @@ def form():
             list_story.append(story)
           else:
             list_story.append("Nothing")
-        for genre in tree.xpath(f"//*[@id='main']/div/div[3]/div/div[{i}]/div[3]/p[1]/span"):
+        for genre in tree.xpath(f"/html/body/div[2]/div/div[2]/div[3]/div[1]/div/div[3]/div/div[{i}]/div[3]/p[1]/span"):
           if "genre" in genre.classes:
             genre = genre.text
             genre = translator.translate(genre, src = "en" ,dest='fa').text
