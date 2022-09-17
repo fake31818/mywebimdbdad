@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+<head>
+ <meta charset="utf-8">
+ <link rel="stylesheet" type="text/css" href="/static/style.css">
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <title>First</title>
+</head>
+<form method="POST" action="/page">
+	<input type="hidden" value={{link_page}} name = "save_page">
+	{% for pe in listz %}
+	<div class="card">
+		<div class="box-image">
+			<div class="image">
+				<img src={{pe[6]}}>
+			</div>
+		</div>
+		<div class="text">
+		<p class="name">{{pe[7]}}{{pe[0]}}</p>
+		<div class="box-info">
+			<span class="info-fa" style="padding-bottom: -20px;">{{pe[1]}}</span>
+			<span class="info" >{{pe[2]}}</span>
+			<span class="info"><i class="fa fa-star checked"></i>{{pe[3]}}</span>
+		</div>
+		<div class="box-story">
+			<p class="story">{{pe[4]}}</p>
+		</div>
+		</div>
+		<div class="box-trailer">
+			<button type="submit" class="trailer" value={{pe[5]}} name="trailer">Trailer</button>
+		</div>	
+		
+	</div>
+  {% endfor %}
+  <div class="box_btn_change">
+    {% if check_next %}
+    <button type="submit" name="next" value={{link_next}} class="btn_change">Next</button>
+    {% endif %}
+    {% if check_back %}
+    <button type="submit" name="back" value={{link_back}} class="btn_change">Back</button>
+    {% endif %}
+  </div>
+</form>
+</body>
+</html>

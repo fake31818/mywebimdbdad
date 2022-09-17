@@ -1,0 +1,8 @@
+gunicorn
+beautifulsoup4
+Flask
+googletrans==4.0.0rc1
+lxml
+requests
+urlextract
+IMDbPY
