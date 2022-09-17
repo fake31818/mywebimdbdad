@@ -25,7 +25,6 @@ def edit():
     return f"<p>OK </p><br><p>URL: {url_get}</p>"
 @app.route(f'/page',methods = ['POST', 'GET'])
 def form():
-  start = time.time()
   global number1,number2,page
   translator = Translator()
   link_next = None
