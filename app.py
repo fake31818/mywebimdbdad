@@ -28,7 +28,6 @@ def edit():
     return f"<p>OK </p><br><p>URL: {url_get}</p>"
 @app.route(f'/page',methods = ['POST', 'GET'])
 def form():
-  start = time.time()
   global number1,number2,page
   translator = Translator()
   link_next = None
@@ -259,9 +258,7 @@ def form():
     link_back = "N"
     check_back = False
   else:check_back = True
-  timer = time.time() - start
-  print(f"\nTime is: {timer}")
   listz = zip(list_name,list_genre,run_time,list_rate,list_story,list_link,src_images,list_number)
   return render_template('index.html',listz = listz,link_next = link_next,link_back = link_back,check_next=check_next ,check_back=check_back)
 if __name__ == "__main__":
-  app.run(port=8000)
+  app.run()
