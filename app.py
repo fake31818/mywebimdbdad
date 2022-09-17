@@ -8,11 +8,8 @@ from urlextract import URLExtract
 from googletrans import Translator
 import imdb
 res_session = requests.Session()
-pages = 1
-page = 1
 number1 = 1
-number2 = 26
-url_pages = "s"
+number2 = 11
 app = Flask(__name__)
 @app.route('/')
 def main():
@@ -23,11 +20,12 @@ def edit():
     return render_template('edit.html')
   elif request.method == 'POST':
     url_get = request.form["url_change"]
-    data_save = {"url":url_get,"number_page":"1"}
+    data_save = {"url":url_get,"number_page":1}
     pickle.dump(data_save,open("data.txt","wb"))
     return f"<p>OK </p><br><p>URL: {url_get}</p>"
 @app.route(f'/page',methods = ['POST', 'GET'])
 def form():
+  start = time.time()
   global number1,number2,page
   translator = Translator()
   link_next = None
@@ -44,16 +42,16 @@ def form():
     button_next = request.form.get('next', None)
     button_back = request.form.get('back', None)
     if(request.method == 'GET'):
-      if number_page == 2:
-        number1 = 26
-        number2 = 51
-      else:
-        number1 = 1
-        number2 = 26
+      for numberi in range(1,6):
+        numberi = int(numberi)
+        if number_page == numberi:
+          add_number_get = numberi * 10
+          number1 = add_number_get - 9
+          number2 = add_number_get + 1
       button_run="run"
 #-----------------------------------------------------------------------------
     if button_next:
-      if number_page == 2:
+      if number_page == 5:
         next = request.form["next"]
         next = 'https://www.imdb.com'+next
         url = next
@@ -61,13 +59,15 @@ def form():
         data_save = {"url":url,"number_page":1}
         pickle.dump(data_save,open("data.txt","wb"))
         number1 = 1
-        number2 = 26
+        number2 = 11
         button_run = "True"
       else:
-        data_save = {"url":url,"number_page":2}
+        number_page_add = number_page + 1
+        number_page_add = int(number_page_add)
+        data_save = {"url":url,"number_page":number_page_add}
         pickle.dump(data_save,open("data.txt","wb"))
-        number1 = 26
-        number2 = 51
+        number1 += 10
+        number2 += 10
         check_back = True
         button_run = "True"
     if button_back:
@@ -76,16 +76,18 @@ def form():
         back = 'https://www.imdb.com'+back
         url = back
         r = res_session.get(url)
-        data_save = {"url":url,"number_page":2}
+        data_save = {"url":url,"number_page":5}
         pickle.dump(data_save,open("data.txt","wb"))
-        number1 = 26
+        number1 = 41
         number2 = 51
         button_run = "True"
       else:
-        data_save = {"url":url,"number_page":1}
+        number_page_add = number_page - 1
+        number_page_add = int(number_page_add)
+        data_save = {"url":url,"number_page":number_page_add}
         pickle.dump(data_save,open("data.txt","wb"))
-        number1 = 1
-        number2 = 26
+        number1 -= 10
+        number2 -= 10
         button_run = "True"
 #-----------------------------------------------------------------------------
     if button_trailer:
@@ -151,7 +153,7 @@ def form():
       list_link = []
       list_number = []
       for i in range(number1,number2):
-        #sys.stdout.write('\r'+ f"Loading... {i}\n")
+        #sys.stdout.write('\r'+ f"Loading... {i}")
         for story in tree.xpath(f"//*[@id='main']/div/div[3]/div/div[{i}]/div[3]/p[2]/text()"):
           if story:
             story = translator.translate(story, src = "en" ,dest='fa').text
@@ -254,10 +256,10 @@ def form():
     else:
       link_back = None
       check_back = False
-  if not link_back and number_page == 1:
-    link_back = "N"
-    check_back = False
-  else:check_back = True
+  number_item = re.sub('[^0-9]','', list_number[0])
+  number_item = int(number_item)
+  if number_item != 1:
+    check_back = True
   listz = zip(list_name,list_genre,run_time,list_rate,list_story,list_link,src_images,list_number)
   return render_template('index.html',listz = listz,link_next = link_next,link_back = link_back,check_next=check_next ,check_back=check_back)
 if __name__ == "__main__":
