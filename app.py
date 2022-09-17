@@ -169,8 +169,8 @@ def form():
             break
           else:
             checked_genre = False
-          if checked_genre == False:
-            list_genre.append("Nothing")
+        if checked_genre == False:
+          list_genre.append("Nothing")
         for url_img in tree.xpath(f'//*[@id="main"]/div/div[3]/div/div[{i}]/div[2]/a/img/@loadlate'):
           def getURL(url):
             resize_factor = 9
