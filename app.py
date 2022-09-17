@@ -262,3 +262,6 @@ def form():
     check_back = True
   listz = zip(list_name,list_genre,run_time,list_rate,list_story,list_link,src_images,list_number)
   return render_template('index.html',listz = listz,link_next = link_next,link_back = link_back,check_next=check_next ,check_back=check_back)
+if __name__ == "__main__":
+  port = int(os.environ.get('PORT', 5000))
+  app.run(debug=True,host='0.0.0.0', port=port,use_reloader=False)
