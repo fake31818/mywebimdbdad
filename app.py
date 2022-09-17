@@ -159,6 +159,7 @@ def form():
             list_story.append(story)
           else:
             list_story.append("Nothing")
+        checked_genre = False
         for genre in tree.xpath(f"//*[@id='main']/div/div[3]/div/div[{i}]/div[3]/p[1]/span"):
           check_genre = str(genre.values())
           if check_genre == "['genre']":
